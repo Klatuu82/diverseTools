@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import requests
 import time
 
+
 def find_content():
 
     url = "https://bremen1860.de/sportangebot/membersonly"
@@ -46,6 +47,7 @@ def send_email(link):
     server.quit()
     return True
 
+
 count = 1
 while True:
     try:
@@ -61,6 +63,7 @@ while True:
 
     if count >= 10:
         break
+
 
 print("Anwendung nach 10 Fehlern gestoppt")
 send_email("Anwendung hatte einen Fehler und wurde Beendet.")
