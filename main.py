@@ -2,6 +2,7 @@ import smtplib
 from bs4 import BeautifulSoup
 import requests
 import time
+from datetime import datetime
 
 
 def find_content():
@@ -51,11 +52,15 @@ def send_email(link):
 count = 1
 while True:
     try:
+        now = datetime.now()
+        current_time = now.strftime("%H:%M:%S")
+        print("Anwendung läuft " + current_time)
         found, link = find_content()
         print("Gefunden: " + str(found))
         print("Link: " + link)
         if found:
             send_email(link)
+            break
         time.sleep(30)
     except:
         print(str(count) + ". Fehler")
@@ -63,7 +68,3 @@ while True:
 
     if count >= 10:
         break
-
-
-print("Anwendung nach 10 Fehlern gestoppt")
-send_email("Anwendung hatte einen Fehler und wurde Beendet.")
