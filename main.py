@@ -41,6 +41,17 @@ def find_content(url):
     return False, link
 
 
+def isNewContent(count):
+
+    html_content = requests.get("https://bremen1860.de/sportangebot/membersonly_buchung/6/?nocache=1").text
+    soup = BeautifulSoup(html_content, "html.parser")
+    inputs = soup.find_all("input", class_="radcaltimemo")
+    if count < len(inputs):
+        return len(inputs), True
+
+    return len(inputs), False
+
+
 def send_email(link):
     fromaddr = 'diverstools193@gmail.com'
     toaddrsme = 'dausmarcel@hotmail.com'
@@ -80,28 +91,31 @@ def get_content(url):
 
     return text
 
+def seek():
+    count = 1
+    size = 0
+    while True:
+        try:
+            now = datetime.now()
+            current_time = now.strftime("%H:%M:%S")
+            print("Anwendung läuft " + current_time)
+            found, link = find_content("https://bremen1860.de/sportangebot/membersonly")
+            print("Gefunden: " + str(found))
+            if found:
+                size, isNew = isNewContent(size)
+                print("Anzahl der Termine: " + str(size))
+                if isNew:
+                    print("Neuer Termin!")
+                    send_email(link)
 
-count = 1
-while True:
-    try:
-        now = datetime.now()
-        current_time = now.strftime("%H:%M:%S")
-        print("Anwendung läuft " + current_time)
-        found, link = find_content("https://bremen1860.de/sportangebot/membersonly")
-        print("Gefunden: " + str(found))
-        print("Link: " + link)
-        if found:
-            send_email(link)
-            popupmsg(link)
+            time.sleep(30)
+        except:
+            print(str(count) + ". Fehler")
+            count += 1
+
+        if count >= 10:
             break
-        time.sleep(30)
-    except:
-        print(str(count) + ". Fehler")
-        count += 1
 
-    if count >= 10:
-        break
-
-
+seek()
 # popupmsg("Was ist wenn wir diesen Text sehr lang machen")
 # print(get_content("https://bremen1860.de/sportangebot/membersonly_buchung/9/?nocache=1"))
