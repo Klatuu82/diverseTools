@@ -92,8 +92,9 @@ def get_content(url):
     return text
 
 def seek():
-    count = 1
+    count = 0
     size = 0
+    firstStart = True
     while True:
         try:
             now = datetime.now()
@@ -103,10 +104,14 @@ def seek():
             print("Gefunden: " + str(found))
             if found:
                 size, isNew = isNewContent(size)
+                if firstStart:
+                    firstStart = False
+                    continue
                 print("Anzahl der Termine: " + str(size))
-                if isNew:
+                if isNew and count != 0:
                     print("Neuer Termin!")
                     send_email(link)
+                    time.sleep(300)
 
             time.sleep(30)
         except:
