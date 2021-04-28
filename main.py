@@ -104,15 +104,17 @@ def seek():
             print("Gefunden: " + str(found))
             if found:
                 size, isNew = isNewContent(size)
-                if firstStart:
-                    firstStart = False
-                    continue
                 print("Anzahl der Termine: " + str(size))
-                if isNew and count != 0:
+                if isNew:
+                    if firstStart:
+                        firstStart = False
+                        continue
                     print("Neuer Termin!")
                     send_email(link)
                     time.sleep(300)
-
+            if firstStart:
+                firstStart = False
+                continue
             time.sleep(30)
         except:
             print(str(count) + ". Fehler")
