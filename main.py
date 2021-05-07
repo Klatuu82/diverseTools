@@ -53,10 +53,8 @@ def isNewContent(count):
 
 
 def send_email(link):
+    emailList = ['dausmarcel@hotmail.com', 'nirmalanoormann@web.de', 'moniquekunkel@web.de', 'lena.koehler@posteo.de']
     fromaddr = 'diverstools193@gmail.com'
-    toaddrsme = 'dausmarcel@hotmail.com'
-    toaddrsshe = 'nirmalanoormann@web.de'
-    toaddrsmonique = 'moniquekunkel@web.de'
     msg = "\r\n".join([
         "From: user_me@gmail.com",
         "To: user_you@gmail.com",
@@ -70,9 +68,9 @@ def send_email(link):
     server.ehlo()
     server.starttls()
     server.login(username, password)
-    server.sendmail(fromaddr, toaddrsme, msg)
-    server.sendmail(fromaddr, toaddrsshe, msg)
-    server.sendmail(fromaddr, toaddrsmonique, msg)
+    for email in emailList:
+        server.sendmail(fromaddr, email, msg)
+        print(email)
     server.quit()
     return True
 
@@ -115,11 +113,11 @@ def seek():
             if firstStart:
                 firstStart = False
                 continue
-            time.sleep(30)
         except:
             print(str(count) + ". Fehler")
             count += 1
 
+        time.sleep(30)
         if count >= 10:
             break
 
