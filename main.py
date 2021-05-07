@@ -5,10 +5,15 @@ import time
 from datetime import datetime
 import tkinter as tk
 from tkinter import ttk
+import sys
 
 LARGE_FONT= ("Verdana", 12)
 NORM_FONT = ("Helvetica", 10)
 SMALL_FONT = ("Helvetica", 8)
+
+EMAILLIST = sys.argv[2].split(',')
+PASSWORD = sys.argv[3]
+USERNAME = sys.argv[1]
 
 
 def popupmsg(msg):
@@ -53,8 +58,6 @@ def isNewContent(count):
 
 
 def send_email(link):
-    emailList = ['dausmarcel@hotmail.com', 'nirmalanoormann@web.de', 'moniquekunkel@web.de', 'lena.koehler@posteo.de']
-    fromaddr = 'diverstools193@gmail.com'
     msg = "\r\n".join([
         "From: user_me@gmail.com",
         "To: user_you@gmail.com",
@@ -62,14 +65,12 @@ def send_email(link):
         "",
         link
     ])
-    username = 'diversetools193@gmail.com'
-    password = '#Geheim1*'
     server = smtplib.SMTP('smtp.gmail.com:587')
     server.ehlo()
     server.starttls()
-    server.login(username, password)
-    for email in emailList:
-        server.sendmail(fromaddr, email, msg)
+    server.login(USERNAME, PASSWORD)
+    for email in EMAILLIST:
+        server.sendmail(USERNAME, email, msg)
         print(email)
     server.quit()
     return True
