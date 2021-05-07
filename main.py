@@ -7,14 +7,13 @@ import tkinter as tk
 from tkinter import ttk
 import sys
 
-LARGE_FONT= ("Verdana", 12)
+LARGE_FONT = ("Verdana", 12)
 NORM_FONT = ("Helvetica", 10)
 SMALL_FONT = ("Helvetica", 8)
 
 EMAILLIST = sys.argv[2].split(',')
 PASSWORD = sys.argv[3]
 USERNAME = sys.argv[1]
-
 
 def popupmsg(msg):
     popup = tk.Tk()
