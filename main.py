@@ -70,7 +70,6 @@ def send_email(link):
     server.login(USERNAME, PASSWORD)
     for email in EMAILLIST:
         server.sendmail(USERNAME, email, msg)
-        print(email)
     server.quit()
     return True
 
